@@ -1,20 +1,25 @@
 # local modules
 import util
+import levels
 
 # other modules
 import random
 
 
 class Addition:
-    def __init__(self, a, b):
+    def __init__(self, level):
         # all questions take lists as parameters which are then used to pick a random number
-        self.a = a[random.randint(0, len(a) - 1)]
-        self.b = b[random.randint(0, len(b) - 1)]
+        self.level = level
+        self.a = self._gen_var(True)
+        self.b = self._gen_var(False)
         self.ans = self._calc_ans()
-        self.image = None
 
     def __str__(self):
         return f'{self.a} + {self.b}'
+
+    def _gen_var(self, first):
+        target = levels.add_values[self.level - (1 * int(first))]
+        return target[random.randint(0, len(target) - 1)]
 
     def _calc_ans(self):
         return self.a + self.b
@@ -23,6 +28,10 @@ class Addition:
 class Subtraction(Addition):
     def __str__(self):
         return f'{max(self.a, self.b)} - {min(self.a, self.b)}'
+
+    def _gen_var(self, first):
+        target = levels.add_values[self.level - (1 * int(first)) - 1]
+        return target[random.randint(0, len(target) - 1)]
     
     def _calc_ans(self):
         return max(self.a, self.b) - min(self.a, self.b)
@@ -31,6 +40,10 @@ class Subtraction(Addition):
 class NegativeSubtraction(Subtraction):
     def __str__(self):
         return f'{min(self.a, self.b)} - {max(self.a, self.b)}'
+
+    def _gen_var(self, first):
+        target = levels.add_values[self.level - (1 * int(first)) - 2]
+        return target[random.randint(0, len(target) - 1)]
         
     def _calc_ans(self):
         return min(self.a, self.b) - max(self.a, self.b)
@@ -39,6 +52,10 @@ class NegativeSubtraction(Subtraction):
 class Multiplication(Addition):
     def __str__(self):
         return f'{self.a} × {self.b}'
+
+    def _gen_var(self, first):
+        target = levels.mult_values[self.level - (1 * int(first))]
+        return target[random.randint(0, len(target) - 1)]
         
     def _calc_ans(self):
         return self.a * self.b
@@ -47,6 +64,10 @@ class Multiplication(Addition):
 class Division(Addition):
     def __str__(self):
         return f'{self.a} ÷ {self.b}'
+
+    def _gen_var(self, first):
+        target = levels.mult_values[self.level - (1 * int(first)) - 1]
+        return target[random.randint(0, len(target) - 1)]
 
     def _calc_ans(self):
         return self.a / self.b
@@ -69,23 +90,25 @@ class Root(Power):
 
 
 class Triangle(Addition):
-    def __init__(self, a, b):
-        super().__init__(a, b)
-
     def __str__(self):
         return f'A right-angled triangle has two sides of lengths {self.a} and {self.b} with an unknown hypotenuse.' \
                f'\nWhat is the area of this triangle?'
+
+    def _gen_var(self, first):
+        target = levels.mult_values[self.level - (1 * int(first)) - 4]
+        return target[random.randint(0, len(target) - 1)]
 
     def _calc_ans(self):
         return (self.a * self.b) / 2
 
 
 class SquareArea(Addition):
-    def __init__(self, a, b):
-        super().__init__(a, b)
-
     def __str__(self):
         return f'A rectangle has two sides of lengths {self.a} and {self.b}\nWhat is the area of this rectangle?'
+
+    def _gen_var(self, first):
+        target = levels.mult_values[self.level - (1 * int(first)) - 2]
+        return target[random.randint(0, len(target) - 1)]
 
     def _calc_ans(self):
         return self.a * self.b
@@ -94,6 +117,10 @@ class SquareArea(Addition):
 class SquarePerimeter(SquareArea):
     def __str__(self):
         return f'A rectangle has two sides of lengths {self.a} and {self.b}\nWhat is the perimeter of this rectangle?'
+
+    def _gen_var(self, first):
+        target = levels.mult_values[self.level - (1 * int(first)) - 3]
+        return target[random.randint(0, len(target) - 1)]
 
     def _calc_ans(self):
         return 2 * (self.a * self.b)
@@ -114,6 +141,10 @@ class CircleArea:
 class CirclePerimeter(CircleArea):
     def __str__(self):
         return f'A circle\'s radius is {self.a} long.\nWhat is the perimeter of this circle?'
+
+    def _gen_var(self, first):
+        target = levels.mult_values[self.level - (1 * int(first)) - 4]
+        return target[random.randint(0, len(target) - 1)]
 
     def _calc_ans(self):
         return 2 * self.a
