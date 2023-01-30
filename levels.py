@@ -3,18 +3,18 @@ CAP = 12
 
 # question order
 order = [
-    'Addition',             # add
-    'Subtraction',          # add
-    'NegativeSubtraction',  # add
-    'Multiplication',       # mult
-    'Division',             # mult
-    'Power',
-    'Root',
-    'SquareArea',           # mult
-    'SquarePerimeter',      # mult
-    'Triangle',             # mult
-    'CirclePerimeter',      # mult
-    'CircleArea'
+    'Addition',             # add - 0
+    'Subtraction',          # add - 1
+    'NegativeSubtraction',  # add - 2
+    'Multiplication',       # mult - 3
+    'Division',             # mult - 4
+    'Power',                # pow - 5
+    'Root',                 # root - 6
+    'SquareArea',           # mult - 7
+    'SquarePerimeter',      # mult - 8
+    'Triangle',             # mult - 9
+    'CirclePerimeter',      # mult - 10
+    'CircleArea'            # pow - 11
 ]
 
 # used for Addition, Subtraction & NegativeSubtraction
@@ -35,7 +35,7 @@ add_values = [
 ]
 
 # used for Multiplication, Division, Triangle, 
-# SquareArea, SquarePerimeter and CirclePerimeter
+# SquareArea, SquarePerimeter & CirclePerimeter
 mult_values = [
     [2, 4],
     [2, 3, 4, 10],
@@ -48,3 +48,23 @@ mult_values = [
     [7, 12, 15, 20, 25],
     [12, 15, 18, 20, 25]
 ]
+
+# used for Power & CircleArea
+pow_values = [
+    [   # indices
+        [2],
+        [2, 3]
+    ],
+    [   # values
+        [2, 3, 4, 5],
+        [3, 4, 5, 10],
+        [3, 5, 6, 9, 10]
+    ]
+]
+
+# used for Root
+# due to the precise nature of roots, values are stored in a dictionary
+root_values = {
+    2 : [4, 16, 32, 64]
+    3 : [9, 27, 64]
+}

@@ -54,7 +54,7 @@ class Multiplication(Addition):
         return f'{self.a} × {self.b}'
 
     def _gen_var(self, first):
-        target = levels.mult_values[self.level - (1 * int(first))]
+        target = levels.mult_values[self.level - (1 * int(first)) - 3]
         return target[random.randint(0, len(target) - 1)]
         
     def _calc_ans(self):
@@ -66,7 +66,7 @@ class Division(Addition):
         return f'{self.a} ÷ {self.b}'
 
     def _gen_var(self, first):
-        target = levels.mult_values[self.level - (1 * int(first)) - 1]
+        target = levels.mult_values[self.level - (1 * int(first)) - 4]
         return target[random.randint(0, len(target) - 1)]
 
     def _calc_ans(self):
@@ -76,6 +76,16 @@ class Division(Addition):
 class Power(Addition):
     def __str__(self):
         return f'{self.a}{util.superscript(self.b)}'
+
+    def _gen_var(self, first):
+        if first:
+            target = levels.pow_values[1]
+            target = target[(self.level - 6) // 2]
+        else:
+            target = levels.pow_values[0]
+            target = target[(self.level - 6) // 3]
+        
+        return target[random.randint(0, len(target) - 1)]
 
     def _calc_ans(self):
         return pow(self.a, self.b)
@@ -95,7 +105,7 @@ class Triangle(Addition):
                f'\nWhat is the area of this triangle?'
 
     def _gen_var(self, first):
-        target = levels.mult_values[self.level - (1 * int(first)) - 4]
+        target = levels.mult_values[self.level - (1 * int(first)) - 9]
         return target[random.randint(0, len(target) - 1)]
 
     def _calc_ans(self):
@@ -107,7 +117,7 @@ class SquareArea(Addition):
         return f'A rectangle has two sides of lengths {self.a} and {self.b}\nWhat is the area of this rectangle?'
 
     def _gen_var(self, first):
-        target = levels.mult_values[self.level - (1 * int(first)) - 2]
+        target = levels.mult_values[self.level - (1 * int(first)) - 7]
         return target[random.randint(0, len(target) - 1)]
 
     def _calc_ans(self):
@@ -119,7 +129,7 @@ class SquarePerimeter(SquareArea):
         return f'A rectangle has two sides of lengths {self.a} and {self.b}\nWhat is the perimeter of this rectangle?'
 
     def _gen_var(self, first):
-        target = levels.mult_values[self.level - (1 * int(first)) - 3]
+        target = levels.mult_values[self.level - (1 * int(first)) - 8]
         return target[random.randint(0, len(target) - 1)]
 
     def _calc_ans(self):
@@ -128,11 +138,15 @@ class SquarePerimeter(SquareArea):
 
 class CircleArea:
     def __init__(self, a):
-        self.a = a[random.randint(0, len(a) - 1)]
+        self.a = self._gen_var(False)
         self.ans = self._calc_ans()
 
     def __str__(self):
         return f'A circle\'s radius is {self.a} long.\nWhat is the area of this circle?'
+
+    def _gen_var(self, first):
+        target = levels.mult_values[self.level - 11]
+        return target[random.randint(0, len(target) - 1)]
 
     def _calc_ans(self):
         return pow(self.a, 2)
@@ -143,7 +157,7 @@ class CirclePerimeter(CircleArea):
         return f'A circle\'s radius is {self.a} long.\nWhat is the perimeter of this circle?'
 
     def _gen_var(self, first):
-        target = levels.mult_values[self.level - (1 * int(first)) - 4]
+        target = levels.mult_values[self.level - 11]
         return target[random.randint(0, len(target) - 1)]
 
     def _calc_ans(self):
