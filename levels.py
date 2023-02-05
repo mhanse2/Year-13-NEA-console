@@ -64,7 +64,7 @@ pow_values = [
 
 # used for Root
 # due to the precise nature of roots, values are stored in a dictionary
-root_values = {
-    2 : [4, 16, 32, 64]
-    3 : [9, 27, 64]
-}
+root_values = [
+    [4, 16, 32, 64],
+    [9, 27, 64]
+]

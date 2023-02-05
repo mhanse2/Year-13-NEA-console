@@ -8,8 +8,10 @@ import random
 
 class Addition:
     def __init__(self, level):
-        # all questions take lists as parameters which are then used to pick a random number
-        self.level = level
+        if level > 13:
+            self.level = 12
+        else:
+            self.level = level
         self.a = self._gen_var(True)
         self.b = self._gen_var(False)
         self.ans = self._calc_ans()
@@ -63,14 +65,14 @@ class Multiplication(Addition):
 
 class Division(Addition):
     def __str__(self):
-        return f'{self.a} ÷ {self.b}'
+        return f'{self.a} ÷ {self.b} (to 1 dp)'
 
     def _gen_var(self, first):
         target = levels.mult_values[self.level - (1 * int(first)) - 4]
         return target[random.randint(0, len(target) - 1)]
 
     def _calc_ans(self):
-        return self.a / self.b
+        return round((self.a / self.b), 1)
 
 
 class Power(Addition):
@@ -94,6 +96,13 @@ class Power(Addition):
 class Root(Power):
     def __str__(self):
         return f'{util.superscript(self.b) if self.b != 2 else ""}√{self.a}'
+
+    def _gen_var(self, first):
+        if first:
+            return random.randint(2, 2 + ((self.level - 5) // 3))
+        else:
+            target = levels.root_values[self.a - 2]
+            return target[random.randint(0, len(target) - 1)]
 
     def _calc_ans(self):
         return pow(self.a, 1/self.b)
@@ -133,19 +142,23 @@ class SquarePerimeter(SquareArea):
         return target[random.randint(0, len(target) - 1)]
 
     def _calc_ans(self):
-        return 2 * (self.a * self.b)
+        return 2 * (self.a + self.b)
 
 
 class CircleArea:
-    def __init__(self, a):
-        self.a = self._gen_var(False)
+    def __init__(self, level):
+        if level > 13:
+            self.level = 12
+        else:
+            self.level = level
+        self.a = self._gen_var()
         self.ans = self._calc_ans()
 
     def __str__(self):
         return f'A circle\'s radius is {self.a} long.\nWhat is the area of this circle?'
 
-    def _gen_var(self, first):
-        target = levels.mult_values[self.level - 11]
+    def _gen_var(self):
+        target = levels.pow_values[1][self.level - 11]
         return target[random.randint(0, len(target) - 1)]
 
     def _calc_ans(self):
@@ -156,8 +169,8 @@ class CirclePerimeter(CircleArea):
     def __str__(self):
         return f'A circle\'s radius is {self.a} long.\nWhat is the perimeter of this circle?'
 
-    def _gen_var(self, first):
-        target = levels.mult_values[self.level - 11]
+    def _gen_var(self):
+        target = levels.mult_values[1][self.level - 12]
         return target[random.randint(0, len(target) - 1)]
 
     def _calc_ans(self):
