@@ -1,16 +1,20 @@
 # local modules
-import questions
-import states
-
-# other modules
-import random
+from states import *
 
 
-quiz = states.QuizState(1)
+quiz = QuizState(1)
+
+menu = MenuState([
+    Option('Start Quiz', 'quiz.ask()'),
+    Option('Print Hello World', 'print(\'Hello World!\')')
+])
 
 
 def main():
-    quiz.ask()
+    while True:
+        menu.display()
+        choice = menu.prompt()
+        eval(choice.command)
 
 
 if __name__ == '__main__':

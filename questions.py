@@ -12,8 +12,8 @@ class Addition:
             self.level = 12
         else:
             self.level = level
-        self.a = self._gen_var(True)
-        self.b = self._gen_var(False)
+        self.a = self._gen_var(False)
+        self.b = self._gen_var(True)
         self.ans = self._calc_ans()
 
     def __str__(self):
