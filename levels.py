@@ -1,6 +1,3 @@
-# the highest level the player can achieve
-CAP = 12
-
 # question order
 order = [
     'Addition',             # add - 0
